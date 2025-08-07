@@ -267,11 +267,9 @@ function DitheredWaves({
       <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
         <planeGeometry args={[1, 1]} />
         <shaderMaterial
-          args={[{
-            vertexShader: waveVertexShader,
-            fragmentShader: waveFragmentShader,
-            uniforms: waveUniformsRef.current,
-          }]}
+          vertexShader={waveVertexShader}
+          fragmentShader={waveFragmentShader}
+          uniforms={waveUniformsRef.current}
         />
       </mesh>
 
