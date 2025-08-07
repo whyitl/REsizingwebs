@@ -215,6 +215,18 @@ function DitheredWaves({
     mouseRadius: new THREE.Uniform(mouseRadius),
   });
 
+  const shaderMaterialRef = useRef<THREE.ShaderMaterial>();
+
+  useEffect(() => {
+    if (!shaderMaterialRef.current) {
+      shaderMaterialRef.current = new THREE.ShaderMaterial({
+        vertexShader: waveVertexShader,
+        fragmentShader: waveFragmentShader,
+        uniforms: waveUniformsRef.current,
+      });
+    }
+  }, []);
+
   useEffect(() => {
     const dpr = gl.getPixelRatio();
     const w = Math.floor(size.width * dpr),
@@ -266,11 +278,7 @@ function DitheredWaves({
     <>
       <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
         <planeGeometry args={[1, 1]} />
-        <shaderMaterial
-          vertexShader={waveVertexShader}
-          fragmentShader={waveFragmentShader}
-          uniforms={waveUniformsRef.current}
-        />
+        <primitive object={shaderMaterialRef.current} />
       </mesh>
 
       <EffectComposer>
@@ -284,7 +292,7 @@ function DitheredWaves({
         visible={false}
       >
         <planeGeometry args={[1, 1]} />
-        <meshBasicMaterial transparent opacity={0} />
+        <meshBasicMaterial args={[{ transparent: true, opacity: 0 }]} />
       </mesh>
     </>
   );
