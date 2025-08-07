@@ -148,7 +148,7 @@
 
   /* Animation utilities */
   .animate-on-scroll {
-    @apply opacity-0 translate-y-8 transition-all duration-800;
+    @apply opacity-0 translate-y-8 transition-all duration-700;
   }
 
   .animate-on-scroll.animate {
