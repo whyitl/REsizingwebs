@@ -1,4 +1,3 @@
-
 /* eslint-disable react/no-unknown-property */
 import { useRef, useEffect, forwardRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
@@ -171,7 +170,7 @@ interface RetroEffectProps {
   pixelSize: number;
 }
 
-const RetroEffect = forwardRef<any, RetroEffectProps>((props, ref) => {
+const RetroEffect = forwardRef<RetroEffectImpl, RetroEffectProps>((props, ref) => {
   const { colorNum, pixelSize } = props;
   return <WrappedRetro ref={ref} colorNum={colorNum} pixelSize={pixelSize} />;
 });
@@ -268,12 +267,9 @@ function DitheredWaves({
       <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
         <planeGeometry args={[1, 1]} />
         <shaderMaterial
-          attach="material"
-          args={[{
-            vertexShader: waveVertexShader,
-            fragmentShader: waveFragmentShader,
-            uniforms: waveUniformsRef.current,
-          }]}
+          vertexShader={waveVertexShader}
+          fragmentShader={waveFragmentShader}
+          uniforms={waveUniformsRef.current}
         />
       </mesh>
 
@@ -288,7 +284,7 @@ function DitheredWaves({
         visible={false}
       >
         <planeGeometry args={[1, 1]} />
-        <meshBasicMaterial args={[{ transparent: true, opacity: 0 }]} />
+        <meshBasicMaterial transparent opacity={0} />
       </mesh>
     </>
   );
