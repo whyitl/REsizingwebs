@@ -143,7 +143,7 @@
   }
 
   .form-textarea {
-    @apply w-full px-4 py-3 bg-brand-white border border-brand-gray-light text-brand-black placeholder-brand-gray focus:outline-none focus:border-brand-black transition-colors duration-300 min-h-[120px] resize-vertical;
+    @apply w-full px-4 py-3 bg-brand-white border border-brand-gray-light text-brand-black placeholder-brand-gray focus:outline-none focus:border-brand-black transition-colors duration-300 min-h-[120px] resize-y;
   }
 
   /* Animation utilities */
