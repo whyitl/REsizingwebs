@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { useRef, useEffect, forwardRef } from "react";
+import { useRef, useEffect, forwardRef, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EffectComposer, wrapEffect } from "@react-three/postprocessing";
 import { Effect } from "postprocessing";
@@ -215,16 +215,13 @@ function DitheredWaves({
     mouseRadius: new THREE.Uniform(mouseRadius),
   });
 
-  const shaderMaterialRef = useRef<THREE.ShaderMaterial>();
-
-  useEffect(() => {
-    if (!shaderMaterialRef.current) {
-      shaderMaterialRef.current = new THREE.ShaderMaterial({
-        vertexShader: waveVertexShader,
-        fragmentShader: waveFragmentShader,
-        uniforms: waveUniformsRef.current,
-      });
-    }
+  // Use useMemo to create the shader material once and ensure it's always defined
+  const shaderMaterial = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      vertexShader: waveVertexShader,
+      fragmentShader: waveFragmentShader,
+      uniforms: waveUniformsRef.current,
+    });
   }, []);
 
   useEffect(() => {
@@ -278,7 +275,7 @@ function DitheredWaves({
     <>
       <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
         <planeGeometry args={[1, 1]} />
-        <primitive object={shaderMaterialRef.current} />
+        <primitive object={shaderMaterial} />
       </mesh>
 
       <EffectComposer>
