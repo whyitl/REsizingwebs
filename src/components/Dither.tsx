@@ -1,3 +1,4 @@
+
 /* eslint-disable react/no-unknown-property */
 import { useRef, useEffect, forwardRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
@@ -267,9 +268,12 @@ function DitheredWaves({
       <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
         <planeGeometry args={[1, 1]} />
         <shaderMaterial
-          vertexShader={waveVertexShader}
-          fragmentShader={waveFragmentShader}
-          uniforms={waveUniformsRef.current}
+          attach="material"
+          args={[{
+            vertexShader: waveVertexShader,
+            fragmentShader: waveFragmentShader,
+            uniforms: waveUniformsRef.current,
+          }]}
         />
       </mesh>
 
