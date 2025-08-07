@@ -113,20 +113,28 @@
 
   /* Portfolio card styles */
   .portfolio-card {
-    @apply group relative overflow-hidden bg-brand-gray-light aspect-[4/3] transition-all duration-500 hover:shadow-2xl;
+    @apply relative overflow-hidden bg-brand-gray-light aspect-[4/3] transition-all duration-500 hover:shadow-2xl;
   }
 
   .portfolio-card-overlay {
-    @apply absolute inset-0 bg-brand-black bg-opacity-0 transition-all duration-500 group-hover:bg-opacity-80 flex items-center justify-center;
+    @apply absolute inset-0 bg-brand-black bg-opacity-0 transition-all duration-500 flex items-center justify-center;
+  }
+
+  .portfolio-card:hover .portfolio-card-overlay {
+    @apply bg-opacity-80;
   }
 
   .portfolio-card-content {
-    @apply text-center text-brand-white opacity-0 transform translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0;
+    @apply text-center text-brand-white opacity-0 transform translate-y-4 transition-all duration-500;
+  }
+
+  .portfolio-card:hover .portfolio-card-content {
+    @apply opacity-100 translate-y-0;
   }
 
   /* Service card styles */
   .service-card {
-    @apply group p-8 bg-brand-white border border-brand-gray-light transition-all duration-300 hover:border-brand-black hover:shadow-lg;
+    @apply p-8 bg-brand-white border border-brand-gray-light transition-all duration-300 hover:border-brand-black hover:shadow-lg;
   }
 
   /* Form styles */

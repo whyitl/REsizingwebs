@@ -51,7 +51,7 @@ const Services = () => {
           {services.map((service, index) => (
             <div 
               key={index}
-              className="service-card animate-on-scroll"
+              className="group service-card animate-on-scroll"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="text-brand-black mb-6 group-hover:text-brand-gray transition-colors duration-300">

@@ -40,7 +40,7 @@ const Portfolio = () => {
           {projects.map((project, index) => (
             <div 
               key={index}
-              className="portfolio-card animate-on-scroll"
+              className="group portfolio-card animate-on-scroll"
               style={{ animationDelay: `${index * 0.15}s` }}
             >
               <img 
