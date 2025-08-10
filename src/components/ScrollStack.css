@@ -29,6 +29,8 @@
   transform: translateZ(0);
   position: relative;
   contain: paint layout style; /* isolate to reduce layout thrash */
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
 }
 
 .scroll-stack-end {
