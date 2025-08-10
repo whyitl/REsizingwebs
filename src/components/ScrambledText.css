@@ -1,0 +1,20 @@
+/* Minimal defaults; actual font sizing comes from Tailwind classes on the wrapper */
+.text-block {
+  max-width: 100%;
+}
+
+.text-block p {
+  white-space: pre-wrap;
+}
+
+.char {
+  will-change: transform;
+}
+
+/* Prevent word splitting across lines while keeping per-char spans */
+.text-block p {
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+

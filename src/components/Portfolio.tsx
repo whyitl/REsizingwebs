@@ -1,32 +1,31 @@
 
-import { ExternalLink } from 'lucide-react';
 
 const Portfolio = () => {
   const projects = [
     {
-      title: "E-commerce Platform",
-      description: "Modern online store with seamless user experience",
-      category: "Web Design",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
+      title: "Construction Company",
+      description: "Modern website showcasing services, projects, and quotes.",
+      image: "/portfolio/construction.webp",
     },
     {
-      title: "Restaurant Website",
-      description: "Beautiful dining experience showcase",
-      category: "Branding",
-      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop"
+      title: "DeFi Crypto App",
+      description: "Crypto dashboard and DEX UI with optimized routing.",
+      image: "/portfolio/defi-app.png",
     },
     {
-      title: "SaaS Landing Page",
-      description: "High-converting product launch page",
-      category: "UI/UX",
-      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=600&fit=crop"
-    }
+      title: "Therapy Practice",
+      description: "Calming, accessible design for a mental health clinic.",
+      image: "/portfolio/therapy.webp",
+    },
   ];
 
   return (
-    <section id="portfolio" className="section-padding bg-brand-white">
+    <section
+      id="portfolio"
+      className="section-light pt-0 pb-8 mt-[-34rem] sm:mt-[-36rem] lg:mt-[-40rem] xl:mt-[-44rem] animate-on-scroll"
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-20">
+        <div className="text-center mb-12">
           <h2 className="heading-lg text-brand-black mb-6">
             Our Work
           </h2>
@@ -44,25 +43,26 @@ const Portfolio = () => {
               style={{ animationDelay: `${index * 0.15}s` }}
             >
               <img 
-                src={project.image} 
-                alt={project.title}
+                src={project.image}
+                alt={`${project.title} website design case study`}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  // If local asset fails, fall back to placeholder
+                  if (!target.src.endsWith('/placeholder.svg')) {
+                    target.src = '/placeholder.svg';
+                  }
+                }}
               />
               <div className="portfolio-card-overlay">
                 <div className="portfolio-card-content p-6">
-                  <span className="text-sm font-medium text-brand-gray mb-2 block">
-                    {project.category}
-                  </span>
                   <h3 className="heading-md text-brand-white mb-3">
                     {project.title}
                   </h3>
-                  <p className="body-md text-brand-white mb-6">
+                  <p className="body-md text-brand-white">
                     {project.description}
                   </p>
-                  <button className="inline-flex items-center text-brand-white border border-brand-white px-4 py-2 hover:bg-brand-white hover:text-brand-black transition-all duration-300">
-                    View Project
-                    <ExternalLink className="ml-2 w-4 h-4" />
-                  </button>
                 </div>
               </div>
             </div>

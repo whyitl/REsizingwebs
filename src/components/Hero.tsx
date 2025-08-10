@@ -1,8 +1,12 @@
 
 import { ChevronDown } from 'lucide-react';
-import Dither from './Dither';
+import BeamsSafe from './BeamsSafe';
+import TextType from './TextType';
+import { useState } from 'react';
 
 const Hero = () => {
+  const [titleDone, setTitleDone] = useState(false);
+
   const scrollToContact = () => {
     const element = document.getElementById('contact');
     if (element) {
@@ -18,50 +22,59 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative">
-      {/* Dithered wave background */}
+    <section id="home" className="min-h-screen flex items-center justify-center relative section-dark">
+      {/* Three.js Beams Background with Safe Error Handling */}
       <div className="absolute inset-0 w-full h-full">
-        <Dither
-          waveColor={[0.9, 0.9, 0.9]}
-          disableAnimation={false}
-          enableMouseInteraction={true}
-          mouseRadius={0.3}
-          colorNum={4}
-          waveAmplitude={0.3}
-          waveFrequency={3}
-          waveSpeed={0.05}
+        <BeamsSafe 
+          beamWidth={3}
+          beamHeight={18}
+          beamNumber={18}
+          lightColor="#ffffff"
+          speed={1.8}
+          noiseIntensity={1.35}
+          scale={0.22}
+          rotation={0}
         />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10">
         <div className="animate-fade-in">
-          <h1 className="heading-xl text-brand-black mb-8">
-            Crafting Digital<br />
-            Experiences That<br />
-            <span className="italic">Convert</span>
-          </h1>
-          
-          <p className="body-lg text-brand-gray max-w-2xl mx-auto mb-12">
-            Tailored web solutions for small businesses in Canada. 
-            We combine creativity with strategy to deliver digital solutions that work.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button 
-              onClick={scrollToContact}
-              className="btn-hero"
-            >
-              Get Started
-            </button>
-            
-            <button 
-              onClick={scrollToServices}
-              className="inline-flex items-center text-brand-black font-medium hover:text-brand-gray transition-colors duration-300"
-            >
-              Explore Our Work
-              <ChevronDown className="ml-2 w-4 h-4" />
-            </button>
-          </div>
+          <TextType
+            as="h1"
+            className="heading-xl text-brand-white mb-8"
+            text={["Crafting Digital Experiences That Convert"]}
+            typingSpeed={50}
+            pauseDuration={1500}
+            showCursor={false}
+            loop={false}
+            startOnVisible={true}
+            onSentenceComplete={() => setTitleDone(true)}
+          />
+
+          {titleDone && (
+            <>
+              <p className="body-lg text-brand-gray max-w-2xl mx-auto mb-12 animate-fade-in">
+                Tailored web solutions for small businesses in Canada. We combine creativity with strategy to deliver digital solutions that work.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center animate-fade-in">
+                <button 
+                  onClick={scrollToContact}
+                  className="btn-hero"
+                >
+                  Get Started
+                </button>
+                
+                <button 
+                  onClick={scrollToServices}
+                  className="inline-flex items-center text-brand-white font-medium hover:text-brand-gray transition-colors duration-300"
+                >
+                  Explore Our Work
+                  <ChevronDown className="ml-2 w-4 h-4" />
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
       

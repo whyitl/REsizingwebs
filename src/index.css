@@ -1,10 +1,10 @@
 
+/* Import custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import custom fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Design System Variables */
 @layer base {
@@ -40,10 +40,17 @@
     --radius: 0rem;
 
     /* Brand Colors */
-    --brand-black: 0 0% 0%;
-    --brand-white: 0 0% 100%;
+    --brand-black: 0 0% 4%;
+    --brand-white: 0 0% 98%;
     --brand-gray: 0 0% 45%;
     --brand-gray-light: 0 0% 96%;
+    --brand-gray-dark: 0 0% 20%;
+    
+    /* Section-specific colors */
+    --dark-bg: 0 0% 4%;
+    --dark-text: 0 0% 95%;
+    --light-bg: 0 0% 98%;
+    --light-text: 0 0% 8%;
   }
 }
 
@@ -63,12 +70,27 @@
 }
 
 @layer components {
-  /* Hero button variant */
+  /* Section background utilities */
+  .section-dark {
+    background: hsl(var(--dark-bg));
+    color: hsl(var(--dark-text));
+  }
+  
+  .section-light {
+    background: hsl(var(--light-bg));
+    color: hsl(var(--light-text));
+  }
+
+  /* Hero button variants */
   .btn-hero {
+    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-brand-black bg-brand-white border border-brand-white transition-all duration-300 hover:bg-transparent hover:text-brand-white hover:border-brand-white;
+  }
+  
+  .btn-hero-light {
     @apply inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-brand-white bg-brand-black border border-brand-black transition-all duration-300 hover:bg-brand-white hover:text-brand-black hover:border-brand-black;
   }
 
-  /* Navigation styles */
+  /* Navigation styles for light backgrounds */
   .nav-link {
     @apply relative text-sm font-medium text-brand-black transition-colors duration-300 hover:text-brand-gray;
   }
@@ -79,6 +101,37 @@
 
   .nav-link:hover::after {
     @apply w-full;
+  }
+  
+  /* Navigation styles for dark backgrounds */
+  .nav-link-dark {
+    @apply relative text-sm font-medium text-brand-white transition-colors duration-300 hover:text-brand-gray;
+  }
+
+  .nav-link-dark::after {
+    @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5 bg-brand-white transition-all duration-300;
+  }
+
+  .nav-link-dark:hover::after {
+    @apply w-full;
+  }
+  
+  /* Navigation styles for transparent header */
+  .nav-link-transparent {
+    @apply relative text-sm font-medium text-brand-white drop-shadow-lg transition-colors duration-300 hover:text-brand-gray;
+  }
+
+  .nav-link-transparent::after {
+    @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5 bg-brand-white transition-all duration-300;
+  }
+
+  .nav-link-transparent:hover::after {
+    @apply w-full;
+  }
+  
+  /* Transparent header button */
+  .btn-hero-transparent {
+    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-brand-black bg-brand-white bg-opacity-95 border border-brand-white transition-all duration-300 hover:bg-opacity-100 hover:shadow-lg drop-shadow-lg;
   }
 
   /* Section spacing */
@@ -113,15 +166,17 @@
 
   /* Portfolio card styles */
   .portfolio-card {
-    @apply relative overflow-hidden bg-brand-gray-light aspect-[4/3] transition-all duration-500 hover:shadow-2xl;
+    @apply relative overflow-hidden bg-brand-gray-light aspect-[4/3] transition-all duration-500 hover:shadow-2xl border-2 border-brand-black;
   }
 
   .portfolio-card-overlay {
-    @apply absolute inset-0 bg-brand-black bg-opacity-0 transition-all duration-500 flex items-center justify-center;
+    /* Use slash opacity to ensure transparency works in Tailwind v3 */
+    @apply absolute inset-0 transition-all duration-500 flex items-center justify-center;
+    background-color: hsl(var(--brand-black) / 0%);
   }
 
   .portfolio-card:hover .portfolio-card-overlay {
-    @apply bg-opacity-80;
+    background-color: hsl(var(--brand-black) / 80%);
   }
 
   .portfolio-card-content {
@@ -130,6 +185,11 @@
 
   .portfolio-card:hover .portfolio-card-content {
     @apply opacity-100 translate-y-0;
+  }
+
+  /* Logo color utility: render raster logo as white via CSS filter */
+  .logo-white {
+    filter: brightness(0) invert(1);
   }
 
   /* Service card styles */
@@ -146,7 +206,42 @@
     @apply w-full px-4 py-3 bg-brand-white border border-brand-gray-light text-brand-black placeholder-brand-gray focus:outline-none focus:border-brand-black transition-colors duration-300 min-h-[120px] resize-y;
   }
 
+  /* Modern form styles */
+  .form-input-modern {
+    @apply w-full px-5 py-4 bg-brand-white border border-brand-gray-light text-brand-black placeholder-brand-gray focus:outline-none focus:border-brand-black focus:ring-2 focus:ring-brand-black focus:ring-opacity-20 transition-all duration-300 rounded-lg text-base;
+  }
+
+  .form-textarea-modern {
+    @apply w-full px-5 py-4 bg-brand-white border border-brand-gray-light text-brand-black placeholder-brand-gray focus:outline-none focus:border-brand-black focus:ring-2 focus:ring-brand-black focus:ring-opacity-20 transition-all duration-300 min-h-[140px] resize-y rounded-lg text-base;
+  }
+
+  .form-select-modern {
+    @apply w-full px-5 py-4 bg-brand-white border border-brand-gray-light text-brand-black focus:outline-none focus:border-brand-black focus:ring-2 focus:ring-brand-black focus:ring-opacity-20 transition-all duration-300 rounded-lg text-base appearance-none bg-no-repeat bg-right pr-12;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
+    background-position: right 1rem center;
+    background-size: 1rem;
+  }
+
+  .btn-hero-modern {
+    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-brand-white bg-brand-black border border-brand-black transition-all duration-300 hover:bg-brand-gray hover:border-brand-gray rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+
   /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
   .animate-on-scroll {
     @apply opacity-0 translate-y-8 transition-all duration-700;
   }
@@ -154,6 +249,190 @@
   .animate-on-scroll.animate {
     @apply opacity-100 translate-y-0;
   }
+
+  /* Fade-out when element leaves viewport */
+  .animate-on-scroll:not(.animate) {
+    @apply opacity-0 translate-y-8;
+  }
+  
+  /* CSS Light Rays Animation */
+  .light-rays-css {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    width: 120%;
+    height: 140%;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      ellipse 80% 60% at center top,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.08) 25%,
+      rgba(255, 255, 255, 0.04) 50%,
+      rgba(255, 255, 255, 0.02) 70%,
+      transparent 100%
+    );
+    animation: lightRaysMain 25s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  .light-rays-css::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.2) 30%,
+      rgba(255, 255, 255, 0.1) 60%,
+      transparent 100%
+    );
+    transform: translateX(-50%);
+    box-shadow: 
+      15px 0 0 rgba(255, 255, 255, 0.15),
+      -15px 0 0 rgba(255, 255, 255, 0.15),
+      30px 0 0 rgba(255, 255, 255, 0.1),
+      -30px 0 0 rgba(255, 255, 255, 0.1),
+      45px 0 0 rgba(255, 255, 255, 0.08),
+      -45px 0 0 rgba(255, 255, 255, 0.08),
+      60px 0 0 rgba(255, 255, 255, 0.05),
+      -60px 0 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  .light-rays-secondary {
+    position: absolute;
+    top: -30%;
+    left: 50%;
+    width: 100%;
+    height: 160%;
+    transform: translateX(-50%) rotate(1deg);
+    background: conic-gradient(
+      from 180deg at 50% 0%,
+      transparent 0deg,
+      rgba(255, 255, 255, 0.03) 45deg,
+      rgba(255, 255, 255, 0.06) 90deg,
+      rgba(255, 255, 255, 0.03) 135deg,
+      transparent 180deg,
+      rgba(255, 255, 255, 0.03) 225deg,
+      rgba(255, 255, 255, 0.06) 270deg,
+      rgba(255, 255, 255, 0.03) 315deg,
+      transparent 360deg
+    );
+    animation: lightRaysSecondary 35s linear infinite;
+    pointer-events: none;
+  }
+  
+  @keyframes lightRaysMain {
+    0%, 100% { 
+      transform: translateX(-50%) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    33% { 
+      transform: translateX(-50%) scale(1.05) rotate(1deg);
+      opacity: 0.8;
+    }
+    66% { 
+      transform: translateX(-50%) scale(0.95) rotate(-0.5deg);
+      opacity: 1.2;
+    }
+  }
+  
+  @keyframes lightRaysSecondary {
+    0% { transform: translateX(-50%) rotate(1deg); }
+    100% { transform: translateX(-50%) rotate(361deg); }
+  }
+  
+  /* Simple Scroll Stack Styles */
+  .simple-scroll-stack {
+    position: relative;
+    width: 100%;
+  }
+  
+  .simple-scroll-stack-inner {
+    position: relative;
+    padding: 0.5rem 0;
+  }
+  
+  .simple-scroll-stack-item-wrapper {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+    transform-origin: center top;
+    will-change: transform, opacity;
+  }
+  
+  .simple-scroll-stack-item {
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 2px solid transparent;
+  }
+  
+  /* Alternating colors for the stacked effect */
+  .simple-scroll-stack-item-wrapper:nth-child(odd) .simple-scroll-stack-item {
+    background: linear-gradient(135deg, hsl(var(--brand-black)) 0%, #1a1a2e 100%);
+    color: hsl(var(--brand-white));
+    border-color: #2a2a3e;
+  }
+  
+  .simple-scroll-stack-item-wrapper:nth-child(even) .simple-scroll-stack-item {
+    background: linear-gradient(135deg, hsl(var(--brand-white)) 0%, #f8f9fa 100%);
+    color: hsl(var(--brand-black));
+    border-color: #e0e0e0;
+  }
+  
+  .simple-scroll-stack-item-wrapper:nth-child(odd) .simple-scroll-stack-item h3 {
+    color: hsl(var(--brand-white));
+  }
+  
+  .simple-scroll-stack-item-wrapper:nth-child(even) .simple-scroll-stack-item h3 {
+    color: hsl(var(--brand-black));
+  }
+  
+  .simple-scroll-stack-item-wrapper:nth-child(odd) .simple-scroll-stack-item p {
+    color: hsl(var(--brand-gray));
+  }
+  
+  .simple-scroll-stack-item-wrapper:nth-child(even) .simple-scroll-stack-item p {
+    color: hsl(var(--brand-gray-dark));
+  }
+  
+  .simple-scroll-stack-item:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  /* Icon colors */
+  .simple-scroll-stack-item-wrapper:nth-child(odd) .service-icon {
+    color: hsl(var(--brand-white));
+  }
+  
+  .simple-scroll-stack-item-wrapper:nth-child(even) .service-icon {
+    color: hsl(var(--brand-black));
+  }
+  
+  /* Feature tag styles */
+  .simple-scroll-stack-item-wrapper:nth-child(odd) .feature-tag {
+    background: rgba(255, 255, 255, 0.15);
+    color: hsl(var(--brand-white));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .simple-scroll-stack-item-wrapper:nth-child(even) .feature-tag {
+    background: rgba(0, 0, 0, 0.08);
+    color: hsl(var(--brand-black));
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Enhanced About Section Styles */
+  .shadow-3xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* Remove duplicate animate-on-scroll styles - using the Tailwind ones above */
 }
 
 /* Smooth scrolling */
@@ -161,7 +440,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar styling for scrollable elements site-wide */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -177,4 +456,15 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--brand-black));
+}
+
+/* Hide only the page (viewport) scrollbar but keep scrolling functional */
+html, body {
+  -ms-overflow-style: none; /* IE and legacy Edge */
+  scrollbar-width: none;   /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;           /* Chrome, Safari, newer Edge */
 }
