@@ -37,7 +37,7 @@ const Hero = () => {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10 cv-auto" style={{ contentVisibility: 'auto', containIntrinsicSize: '800px 600px' }}>
         <div className="animate-fade-in">
           <TextType
             as="h1"
@@ -51,30 +51,28 @@ const Hero = () => {
             onSentenceComplete={() => setTitleDone(true)}
           />
 
-          {titleDone && (
-            <>
-              <p className="body-lg text-brand-white max-w-2xl mx-auto mb-12 animate-fade-in">
-                Tailored web solutions for small businesses in Canada. We combine creativity with strategy to deliver digital solutions that work.
-              </p>
+          <div className={`transition-opacity duration-500 ${titleDone ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            <p className="body-lg text-brand-white max-w-2xl mx-auto mb-12">
+              Tailored web solutions for small businesses in Canada. We combine creativity with strategy to deliver digital solutions that work.
+            </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center animate-fade-in">
-                <button 
-                  onClick={scrollToContact}
-                  className="btn-hero"
-                >
-                  Get Started
-                </button>
-                
-                <button 
-                  onClick={scrollToServices}
-                  className="inline-flex items-center text-brand-white font-medium hover:text-brand-gray transition-colors duration-300"
-                >
-                  Explore Our Work
-                  <ChevronDown className="ml-2 w-4 h-4" />
-                </button>
-              </div>
-            </>
-          )}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <button 
+                onClick={scrollToContact}
+                className="btn-hero"
+              >
+                Get Started
+              </button>
+              
+              <button 
+                onClick={scrollToServices}
+                className="inline-flex items-center text-brand-white font-medium hover:text-brand-gray transition-colors duration-300"
+              >
+                Explore Our Work
+                <ChevronDown className="ml-2 w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       

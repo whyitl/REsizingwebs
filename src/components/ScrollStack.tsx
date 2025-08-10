@@ -115,6 +115,14 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
       let translateY = 0;
       const isPinned = localScroll >= pinStart && localScroll <= pinEnd;
+      // While pinned, emulate sticky positioning to reduce layout thrash in Safari
+      if (isPinned) {
+        (card.style as any).position = 'sticky';
+        (card.style as any).top = `${stackPositionPx + (itemStackDistance * i)}px`;
+      } else {
+        (card.style as any).position = 'relative';
+        (card.style as any).top = 'auto';
+      }
       if (isPinned) {
         translateY = localScroll - cardTop + stackPositionPx + (itemStackDistance * i);
       } else if (localScroll > pinEnd) {
