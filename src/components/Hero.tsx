@@ -53,7 +53,7 @@ const Hero = () => {
 
           {titleDone && (
             <>
-              <p className="body-lg text-brand-gray max-w-2xl mx-auto mb-12 animate-fade-in">
+              <p className="body-lg text-brand-white max-w-2xl mx-auto mb-12 animate-fade-in">
                 Tailored web solutions for small businesses in Canada. We combine creativity with strategy to deliver digital solutions that work.
               </p>
 

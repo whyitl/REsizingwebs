@@ -2,6 +2,8 @@
 
 .variable-proximity {
   font-family: "Roboto Flex", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-synthesis: none;
 }
 
 .sr-only {
@@ -14,6 +16,15 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Safari: stabilize baseline/kerning for per-letter spans */
+.variable-proximity span {
+  vertical-align: baseline;
+}
+
+.variable-proximity .char {
+  line-height: 1;
 }
 
 

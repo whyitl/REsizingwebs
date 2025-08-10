@@ -79,7 +79,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     const endElementTop = endOffsetRef.current;
 
     const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
-    const snapPx = (v: number) => Math.round(v * dpr) / dpr;
+    const isSafari = typeof navigator !== 'undefined' && /Safari\//.test(navigator.userAgent) && !/Chrome\//.test(navigator.userAgent);
+    const snapPx = (v: number) => isSafari ? Math.round(v) : Math.round(v * dpr) / dpr;
     const snapScale = (v: number) => Math.round(v * 1000) / 1000;
 
     cardsRef.current.forEach((card, i) => {

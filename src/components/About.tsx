@@ -17,8 +17,8 @@ const About = () => {
                 <VariableProximity
                   label={'Welcome to the'}
                   className={''}
-                  fromFontVariationSettings="'wght' 400, 'opsz' 9"
-                  toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                  fromFontVariationSettings="'wght' 400, 'opsz' 9, 'slnt' 0"
+                  toFontVariationSettings="'wght' 1000, 'opsz' 40, 'slnt' 0"
                   containerRef={containerRef as unknown as React.RefObject<HTMLElement>}
                   radius={100}
                   falloff={'linear'}
@@ -28,8 +28,8 @@ const About = () => {
                   <VariableProximity
                     label={'Digital Universe'}
                     className={''}
-                    fromFontVariationSettings="'wght' 400, 'opsz' 9"
-                    toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                    fromFontVariationSettings="'wght' 400, 'opsz' 9, 'slnt' -10"
+                    toFontVariationSettings="'wght' 1000, 'opsz' 40, 'slnt' -10"
                     containerRef={containerRef as unknown as React.RefObject<HTMLElement>}
                     radius={100}
                     falloff={'linear'}
