@@ -33,7 +33,7 @@ const Hero = () => {
           speed={1.8}
           noiseIntensity={1.35}
           scale={0.22}
-          rotation={0}
+          rotation={30}
         />
       </div>
 
