@@ -100,34 +100,28 @@ const About = () => {
               </ScrambledText>
             </div>
 
-            {/* Enhanced "What we do" Card */}
+            {/* Pricing Model Card */}
             <div className="animate-on-scroll animate" style={{ animationDelay: '0.5s' }}>
               <div className="bg-brand-black p-8 text-brand-white shadow-2xl border border-gray-800 hover:shadow-3xl transition-all duration-300">
                 <h3 className="heading-md mb-6">
-                  What we do
+                  Pricing model
                 </h3>
-                <div className="space-y-3 body-md">
+                <div className="space-y-4 body-md">
                   <div className="hover:text-brand-gray transition-colors duration-200 cursor-pointer">
-                    Strategy & Planning
+                    Initial creation: $300–$700 one‑time — based on site complexity and features
                   </div>
                   <div className="hover:text-brand-gray transition-colors duration-200 cursor-pointer">
-                    Custom Web Design
+                    Monthly care: $40–$150 — hosting, updates, security, and small edits
                   </div>
-                  <div className="hover:text-brand-gray transition-colors duration-200 cursor-pointer">
-                    Brand Development
-                  </div>
-                  <div className="hover:text-brand-gray transition-colors duration-200 cursor-pointer">
-                    Digital Marketing
-                  </div>
-                  <div className="hover:text-brand-gray transition-colors duration-200 cursor-pointer">
-                    Ongoing Support
+                  <div className="text-brand-gray">
+                    Pricing is tailored to what you need. We’ll scope it with you and give a clear quote.
                   </div>
                 </div>
                 <button 
                   onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                   className="mt-8 inline-flex items-center text-brand-white border border-brand-white px-6 py-3 hover:bg-brand-white hover:text-brand-black transition-all duration-300 group"
                 >
-                  Get Started 
+                  Get your price 
                   <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
                 </button>
               </div>
