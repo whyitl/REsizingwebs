@@ -82,8 +82,18 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     const endElementTop = endOffsetRef.current;
 
     // Limit precision to reduce subpixel noise without forcing whole-pixel snapping
+    const isSafari = typeof navigator !== 'undefined' && /Safari\//.test(navigator.userAgent) && !/Chrome\//.test(navigator.userAgent);
     const snapPx = (v: number) => Math.round(v * 1000) / 1000;
-    const snapScale = (v: number) => Math.round(v * 1000) / 1000;
+    const snapScale = (v: number) => isSafari ? Math.round(v * 100) / 100 : Math.round(v * 1000) / 1000;
+    const EPS = isSafari ? 0.01 : 0.003;
+
+    // Determine which card is currently at the top of the stack once per frame
+    let topCardIndex = 0;
+    for (let j = 0; j < cardsRef.current.length; j++) {
+      const jCardTop = cardOffsetsRef.current[j];
+      const jTriggerStart = jCardTop - stackPositionPx - (itemStackDistance * j);
+      if (localScroll >= jTriggerStart) topCardIndex = j;
+    }
 
     cardsRef.current.forEach((card, i) => {
       if (!card) return;
@@ -101,14 +111,6 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
       let blur = 0;
       if (blurAmount) {
-        let topCardIndex = 0;
-        for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = cardOffsetsRef.current[j];
-          const jTriggerStart = jCardTop - stackPositionPx - (itemStackDistance * j);
-          if (localScroll >= jTriggerStart) {
-            topCardIndex = j;
-          }
-        }
         if (i < topCardIndex) {
           const depthInStack = topCardIndex - i;
           blur = Math.max(0, depthInStack * blurAmount);
@@ -138,10 +140,11 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
       const transform = `translate3d(0, 0, 0) scale(${current.scale})${rotationAmount ? ` rotate(${current.rotation}deg)` : ''}`;
       const lastApplied = lastTransformsRef.current.get(i);
-      if (!lastApplied ||
-          lastApplied.translateY !== current.translateY ||
-          lastApplied.scale !== current.scale ||
-          lastApplied.rotation !== current.rotation) {
+      const needsUpdate = !lastApplied ||
+        Math.abs(lastApplied.translateY - current.translateY) > EPS ||
+        Math.abs(lastApplied.scale - current.scale) > EPS ||
+        Math.abs(lastApplied.rotation - current.rotation) > EPS;
+      if (needsUpdate) {
         card.style.transform = transform;
       }
       if (!lastApplied || lastApplied.blur !== current.blur) {
