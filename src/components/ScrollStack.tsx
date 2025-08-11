@@ -48,6 +48,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const cardsRef = useRef<HTMLElement[]>([]);
   const cardOffsetsRef = useRef<number[]>([]);
   const endOffsetRef = useRef<number>(0);
+  const containerTopRef = useRef<number>(0);
   const lastTransformsRef = useRef(new Map<number, any>());
   const isUpdatingRef = useRef(false);
   const isMobileRef = useRef<boolean>(false);
@@ -72,8 +73,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     isUpdatingRef.current = true;
 
     const pageScroll = window.scrollY;
-    const containerTop = container.getBoundingClientRect().top + window.scrollY;
-    const localScroll = pageScroll - containerTop;
+    const localScroll = pageScroll - containerTopRef.current;
     const containerHeight = window.innerHeight;
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
@@ -147,7 +147,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
       const transform = isMobileRef.current
         ? `translate3d(0, 0, 0) scale(${current.scale})`
-        : `translate3d(0, ${current.translateY | 0}px, 0) scale(${current.scale}) rotate(${current.rotation}deg)`;
+        : `translate3d(0, ${current.translateY}px, 0) scale(${current.scale}) rotate(${current.rotation}deg)`;
       const lastApplied = lastTransformsRef.current.get(i);
       if (!lastApplied ||
           lastApplied.translateY !== current.translateY ||
@@ -200,6 +200,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
     // Precompute offsets for stability
     cardOffsetsRef.current = cards.map((c) => c.offsetTop);
+    // Capture the absolute top of the container once to avoid per-frame layout reads
+    containerTopRef.current = container.getBoundingClientRect().top + window.scrollY;
     const endEl = container.querySelector('.scroll-stack-end') as HTMLElement;
     endOffsetRef.current = endEl ? endEl.offsetTop : container.scrollHeight;
 
@@ -227,14 +229,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     });
 
     let ticking = false;
-    let lastTime = 0;
     const onScroll = () => {
-      const now = performance.now();
-      // Throttle slightly on Safari to reduce micro-jitter; prefer opacity-only updates when possible
-      const isSafari = typeof navigator !== 'undefined' && /Safari\//.test(navigator.userAgent) && !/Chrome\//.test(navigator.userAgent);
-      const minInterval = isSafari ? 20 : 14;
-      if (now - lastTime < minInterval) return;
-      lastTime = now;
       if (!ticking) {
         ticking = true;
         animationFrameRef.current = requestAnimationFrame(() => {
@@ -245,6 +240,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     };
     const onResize = () => {
       cardOffsetsRef.current = cards.map((c) => c.offsetTop);
+      containerTopRef.current = container.getBoundingClientRect().top + window.scrollY;
       const endEl2 = container.querySelector('.scroll-stack-end') as HTMLElement;
       endOffsetRef.current = endEl2 ? endEl2.offsetTop : 0;
       updateCardTransforms();
