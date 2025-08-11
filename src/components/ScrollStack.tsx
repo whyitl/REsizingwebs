@@ -115,14 +115,6 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
       let translateY = 0;
       const isPinned = localScroll >= pinStart && localScroll <= pinEnd;
-      // While pinned, emulate sticky positioning to reduce layout thrash in Safari
-      if (isPinned) {
-        (card.style as any).position = 'sticky';
-        (card.style as any).top = `${stackPositionPx + (itemStackDistance * i)}px`;
-      } else {
-        (card.style as any).position = 'relative';
-        (card.style as any).top = 'auto';
-      }
       if (isPinned) {
         translateY = localScroll - cardTop + stackPositionPx + (itemStackDistance * i);
       } else if (localScroll > pinEnd) {
@@ -137,7 +129,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       };
 
       const last = lastTransformsRef.current.get(i);
-      const SMOOTHING = 0.18;
+      const SMOOTHING = 0.12; // less easing reduces subframe wobble on mobile
       const current = last
         ? {
             translateY: snapPx(last.translateY + (target.translateY - last.translateY) * SMOOTHING),
@@ -147,7 +139,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
           }
         : target;
 
-      const transform = `translate3d(0, ${current.translateY}px, 0) scale(${current.scale}) rotate(${current.rotation}deg)`;
+      const transform = `translate3d(0, ${current.translateY | 0}px, 0) scale(${current.scale}) rotate(${current.rotation}deg)`;
       const lastApplied = lastTransformsRef.current.get(i);
       if (!lastApplied ||
           lastApplied.translateY !== current.translateY ||
@@ -243,6 +235,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('touchmove', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
 
     // Initial render update to avoid white flash/blank
@@ -251,6 +244,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     return () => {
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('touchmove', onScroll);
       window.removeEventListener('resize', onResize);
       stackCompletedRef.current = false;
       cardsRef.current = [];

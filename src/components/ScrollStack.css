@@ -25,8 +25,8 @@
   padding: 2rem;
   border-radius: 28px;
   box-sizing: border-box;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
   position: relative;
   contain: paint layout style; /* isolate to reduce layout thrash */
   -webkit-backface-visibility: hidden;
