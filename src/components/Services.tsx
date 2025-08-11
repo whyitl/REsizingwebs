@@ -1,5 +1,5 @@
 
-import { Monitor, RotateCcw, ShoppingCart, FileText, Wrench } from 'lucide-react';
+import { Monitor, RotateCcw, ShoppingCart, FileText, Wrench, Check } from 'lucide-react';
 import ScrollStack, { ScrollStackItem } from './ScrollStack';
 
 const Services = () => {
@@ -8,31 +8,51 @@ const Services = () => {
       icon: <Monitor className="w-12 h-12" />,
       title: "Custom Web Design",
       description: "Tailored websites built from the ground up. We guide you through every step — from discovery to launch, creating a fully custom site that reflects your brand.",
-      features: []
+      features: [
+        "Discovery and user-first planning",
+        "High‑performance responsive layouts",
+        "SEO‑ready structure and clean code",
+      ]
     },
     {
       icon: <RotateCcw className="w-12 h-12" />,
       title: "Website Redesign", 
       description: "Outdated site? Let's give it a fresh start. We'll analyze your current site and create a modernized version that works harder for your business — without losing your SEO.",
-      features: []
+      features: [
+        "UX refresh that drives conversions",
+        "Content migration without SEO loss",
+        "Accessibility and speed improvements",
+      ]
     },
     {
       icon: <ShoppingCart className="w-12 h-12" />,
       title: "Ecommerce Web Design",
       description: "Online stores that drive real results. We build ecommerce websites that look great and are easy for customers to use — designed for smooth, mobile-optimized shopping that converts.",
-      features: []
+      features: [
+        "Mobile‑first product pages",
+        "Secure checkout and payment flows",
+        "Analytics + growth tracking",
+      ]
     },
     {
       icon: <FileText className="w-12 h-12" />,
       title: "SEO Content Strategy",
       description: "Get found online with the right words. We offer content writing and SEO optimization to help your site rank higher on Google and drive more traffic.",
-      features: []
+      features: [
+        "Keyword research and on‑page SEO",
+        "Content writing and briefs",
+        "Internal linking and schema setup",
+      ]
     },
     {
       icon: <Wrench className="w-12 h-12" />,
       title: "Hosting, Support & Maintenance",
       description: "We don't disappear after launch. We offer reliable hosting, ongoing updates, and support — so you can focus on running your business.",
-      features: []
+      features: [
+        "Managed hosting and backups",
+        "Security monitoring and updates",
+        "Fast support and small edits",
+      ]
     }
   ];
 
@@ -61,14 +81,20 @@ const Services = () => {
                   {service.icon}
                 </div>
                 <div className="flex-1">
-                  <h3 className="heading-md mb-1 md:mb-4">{service.title}</h3>
-                  {/* Mobile: ultra-short 2–3 words; Desktop: full description */}
-                  <p className="text-sm text-brand-gray leading-snug md:hidden">
-                    {service.title.split(/\s+/).slice(0,3).join(' ')}
-                  </p>
-                  <p className="hidden md:block text-brand-gray md:text-2xl lg:text-3xl md:leading-relaxed">
+                  <h3 className="heading-md mb-2 md:mb-4">{service.title}</h3>
+                  <p className="text-base md:text-2xl lg:text-3xl text-brand-gray leading-relaxed">
                     {service.description}
                   </p>
+                  {service.features?.length ? (
+                    <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm md:text-base text-brand-gray-dark">
+                      {service.features.map((feat, i) => (
+                        <li key={i} className="inline-flex items-start gap-2">
+                          <Check className="w-4 h-4 mt-1 flex-none" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </div>
               </div>
             </ScrollStackItem>
