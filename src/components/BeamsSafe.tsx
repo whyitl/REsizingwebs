@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 // Lazy load the Beams component to catch import errors
 const BeamsLazy = React.lazy(() => import('./Beams'));
@@ -15,6 +15,24 @@ interface BeamsSafeProps {
 }
 
 const BeamsSafe: React.FC<BeamsSafeProps> = (props) => {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => setReady(true));
+    } else {
+      setTimeout(() => setReady(true), 1200);
+    }
+  }, []);
+
+  if (!ready) {
+    return (
+      <div className="absolute inset-0 w-full h-full bg-black overflow-hidden">
+        <div className="light-rays-css"></div>
+        <div className="light-rays-secondary"></div>
+      </div>
+    );
+  }
+
   return (
     <Suspense 
       fallback={
