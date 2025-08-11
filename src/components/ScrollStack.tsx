@@ -115,18 +115,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         }
       }
 
-      let translateY = 0;
-      const isPinned = localScroll >= pinStart && localScroll <= pinEnd;
-      if (!isMobileRef.current) {
-        if (isPinned) {
-          translateY = localScroll - cardTop + stackPositionPx + (itemStackDistance * i);
-        } else if (localScroll > pinEnd) {
-          translateY = pinEnd - cardTop + stackPositionPx + (itemStackDistance * i);
-        }
-      } else {
-        // On mobile, rely on sticky positioning for vertical tracking to avoid jitter
-        translateY = 0;
-      }
+      // Use CSS sticky positioning for vertical tracking to avoid jitter across browsers
+      const translateY = 0;
 
       const target = {
         translateY: snapPx(translateY),
@@ -146,9 +136,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
           }
         : target;
 
-      const transform = isMobileRef.current
-        ? `translate3d(0, 0, 0) scale(${current.scale})`
-        : `translate3d(0, ${current.translateY}px, 0) scale(${current.scale}) rotate(${current.rotation}deg)`;
+      const transform = `translate3d(0, 0, 0) scale(${current.scale})${rotationAmount ? ` rotate(${current.rotation}deg)` : ''}`;
       const lastApplied = lastTransformsRef.current.get(i);
       if (!lastApplied ||
           lastApplied.translateY !== current.translateY ||
@@ -222,11 +210,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       (card.style as any).webkitPerspective = '1000px';
       // set once to avoid reflow each frame
       (card.style as any).zIndex = String(i + 1);
-      if (isMobileRef.current) {
-        // Use sticky for vertical tracking, GPU only for scale
-        (card.style as any).position = 'sticky';
-        (card.style as any).top = `${parsePercentage(stackPosition, window.innerHeight) + (itemStackDistance * i)}px`;
-      }
+      // Use sticky for vertical tracking on all viewports; animate only scale/rotation in JS
+      (card.style as any).position = 'sticky';
+      (card.style as any).top = `${parsePercentage(stackPosition, window.innerHeight) + (itemStackDistance * i)}px`;
     });
 
     let ticking = false;
@@ -244,6 +230,11 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       containerTopRef.current = container.getBoundingClientRect().top + window.scrollY;
       const endEl2 = container.querySelector('.scroll-stack-end') as HTMLElement;
       endOffsetRef.current = endEl2 ? endEl2.offsetTop : 0;
+      // Update sticky top positions on resize
+      const topBase = parsePercentage(stackPosition, window.innerHeight);
+      cards.forEach((card, i) => {
+        (card.style as any).top = `${topBase + (itemStackDistance * i)}px`;
+      });
       updateCardTransforms();
     };
 
