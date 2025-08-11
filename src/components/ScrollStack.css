@@ -54,7 +54,7 @@
 
 @media (max-width: 767px) {
   .scroll-stack-inner {
-    padding: 16vh 1rem 28rem; /* reduce bottom padding so section doesn't get cut */
+    padding: 16vh 1rem 20rem; /* balanced bottom padding; extra space added after list via spacer */
     min-height: 100vh;
   }
   .scroll-stack-card {

@@ -113,9 +113,9 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="section-light pt-8 pb-56 md:pb-72 animate-on-scroll">
+    <section id="services" className="section-light pt-8 pb-80 md:pb-96 animate-on-scroll">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-6 md:-mb-36 lg:-mb-44">
+        <div className="text-center mb-8 md:mb-10 lg:mb-12">
           <h2 className="heading-lg text-brand-black mb-4">
             Our Services
           </h2>
@@ -124,7 +124,7 @@ const Services = () => {
           </p>
         </div>
         {isMobile ? (
-          <div className="mt-4 space-y-6">
+          <div className="mt-6 space-y-8">
             {services.map((service, index) => (
               <MobileServiceCard key={service.title} service={service} index={index} />
             ))}
@@ -160,6 +160,9 @@ const Services = () => {
             ))}
           </ScrollStack>
         )}
+
+        {/* Ensure visual breathing room after the last card on all viewports */}
+        <div className="h-16 md:h-24" aria-hidden="true" />
       </div>
     </section>
   );
