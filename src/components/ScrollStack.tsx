@@ -73,15 +73,16 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     isUpdatingRef.current = true;
 
     const pageScroll = window.scrollY;
-    const localScroll = pageScroll - containerTopRef.current;
+    // Recompute containerTop each frame to stay accurate if content above reflows
+    const containerTop = container.getBoundingClientRect().top + window.scrollY;
+    const localScroll = pageScroll - containerTop;
     const containerHeight = window.innerHeight;
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
     const endElementTop = endOffsetRef.current;
 
-    const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
-    // Snap to device pixel ratio boundaries for smoother movement across browsers
-    const snapPx = (v: number) => Math.round(v * dpr) / dpr;
+    // Limit precision to reduce subpixel noise without forcing whole-pixel snapping
+    const snapPx = (v: number) => Math.round(v * 1000) / 1000;
     const snapScale = (v: number) => Math.round(v * 1000) / 1000;
 
     cardsRef.current.forEach((card, i) => {

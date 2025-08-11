@@ -19,6 +19,10 @@
   will-change: transform, filter;
   backface-visibility: hidden;
   transform-style: preserve-3d;
+  /* Prefer composite-only updates */
+  contain: layout paint style;
+  translate: 0 0;
+  perspective: 1000px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
   width: 100%;
   margin: 30px 0;
@@ -28,7 +32,6 @@
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
   position: relative;
-  contain: paint layout style; /* isolate to reduce layout thrash */
   -webkit-backface-visibility: hidden;
   -webkit-transform-style: preserve-3d;
 }
