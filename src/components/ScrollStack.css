@@ -54,7 +54,7 @@
 
 @media (max-width: 767px) {
   .scroll-stack-inner {
-    padding: 16vh 1rem 42rem; /* tighter horizontal padding on mobile */
+    padding: 16vh 1rem 28rem; /* reduce bottom padding so section doesn't get cut */
     min-height: 100vh;
   }
   .scroll-stack-card {

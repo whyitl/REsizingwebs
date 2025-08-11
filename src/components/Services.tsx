@@ -113,9 +113,9 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="section-light pt-8 pb-48 md:pb-64 animate-on-scroll">
+    <section id="services" className="section-light pt-8 pb-56 md:pb-72 animate-on-scroll">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-0 -mb-28 md:-mb-36 lg:-mb-44">
+        <div className="text-center mb-6 md:-mb-36 lg:-mb-44">
           <h2 className="heading-lg text-brand-black mb-4">
             Our Services
           </h2>
@@ -124,7 +124,7 @@ const Services = () => {
           </p>
         </div>
         {isMobile ? (
-          <div className="-mt-2 space-y-6">
+          <div className="mt-4 space-y-6">
             {services.map((service, index) => (
               <MobileServiceCard key={service.title} service={service} index={index} />
             ))}

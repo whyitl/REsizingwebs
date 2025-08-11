@@ -201,7 +201,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     // Precompute offsets for stability
     cardOffsetsRef.current = cards.map((c) => c.offsetTop);
     const endEl = container.querySelector('.scroll-stack-end') as HTMLElement;
-    endOffsetRef.current = endEl ? endEl.offsetTop : 0;
+    endOffsetRef.current = endEl ? endEl.offsetTop : container.scrollHeight;
 
     // detect mobile once on mount
     isMobileRef.current = window.matchMedia('(max-width: 767px)').matches;
