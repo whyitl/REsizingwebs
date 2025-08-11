@@ -222,9 +222,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     let lastTime = 0;
     const onScroll = () => {
       const now = performance.now();
-      // Throttle more on Safari to reduce micro-jitter
+      // Throttle slightly on Safari to reduce micro-jitter; prefer opacity-only updates when possible
       const isSafari = typeof navigator !== 'undefined' && /Safari\//.test(navigator.userAgent) && !/Chrome\//.test(navigator.userAgent);
-      const minInterval = isSafari ? 22 : 14; // ~45fps on Safari, ~70fps elsewhere
+      const minInterval = isSafari ? 20 : 14;
       if (now - lastTime < minInterval) return;
       lastTime = now;
       if (!ticking) {

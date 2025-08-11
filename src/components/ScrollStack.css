@@ -52,9 +52,14 @@
   will-change: scroll-position;
 }
 
-.scroll-stack-inner {
-  padding: 20vh 5rem 50rem;
-  min-height: 100vh;
+@media (max-width: 767px) {
+  .scroll-stack-inner {
+    padding: 16vh 1rem 42rem; /* tighter horizontal padding on mobile */
+    min-height: 100vh;
+  }
+  .scroll-stack-card {
+    margin: 22px 0; /* even spacing */
+  }
 }
 
 .scroll-stack-card-wrapper {

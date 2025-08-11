@@ -49,13 +49,13 @@ const Services = () => {
         </div>
         <ScrollStack
           className="-mt-2 md:-mt-10"
-          itemDistance={20}
-          itemStackDistance={36}
-          stackPosition="22%"
-          baseScale={0.92}
+          itemDistance={22}
+          itemStackDistance={34}
+          stackPosition="24%"
+          baseScale={0.94}
         >
           {services.map((service, index) => (
-            <ScrollStackItem key={index} itemClassName={`w-[98%] sm:w-[96%] md:w-[min(980px,100%)] mx-auto p-6 md:p-10 border rounded-[28px] ${index % 2 === 0 ? 'bg-brand-black text-brand-white border-brand-black shadow-[0_12px_40px_rgba(0,0,0,0.35)]' : 'bg-brand-white text-brand-black border-brand-black'}`}>
+            <ScrollStackItem key={index} itemClassName={`w-[95%] sm:w-[94%] md:w-[min(980px,100%)] mx-auto p-6 md:p-10 border rounded-[28px] ${index % 2 === 0 ? 'bg-brand-black text-brand-white border-brand-black shadow-[0_12px_40px_rgba(0,0,0,0.35)]' : 'bg-brand-white text-brand-black border-brand-black'}`}>
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 <div className={`service-icon flex-shrink-0 ${index % 2 === 0 ? 'text-brand-white' : 'text-brand-black'}`}>
                   {service.icon}
