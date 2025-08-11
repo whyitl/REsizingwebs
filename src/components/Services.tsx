@@ -113,9 +113,9 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="section-light pt-8 pb-80 md:pb-96 animate-on-scroll">
+    <section id="services" className="section-light pt-14 md:pt-16 pb-80 md:pb-96 animate-on-scroll">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-8 md:mb-10 lg:mb-12">
+        <div className="text-center mb-8 md:mb-12 lg:mb-14">
           <h2 className="heading-lg text-brand-black mb-4">
             Our Services
           </h2>

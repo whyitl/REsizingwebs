@@ -80,8 +80,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     const endElementTop = endOffsetRef.current;
 
     const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
-    const isSafari = typeof navigator !== 'undefined' && /Safari\//.test(navigator.userAgent) && !/Chrome\//.test(navigator.userAgent);
-    const snapPx = (v: number) => isSafari ? Math.round(v) : Math.round(v * dpr) / dpr;
+    // Snap to device pixel ratio boundaries for smoother movement across browsers
+    const snapPx = (v: number) => Math.round(v * dpr) / dpr;
     const snapScale = (v: number) => Math.round(v * 1000) / 1000;
 
     cardsRef.current.forEach((card, i) => {
@@ -135,7 +135,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       };
 
       const last = lastTransformsRef.current.get(i);
-      const SMOOTHING = 0.12; // less easing reduces subframe wobble on mobile
+      const SMOOTHING = 0.18; // slightly higher smoothing to further damp micro-jitter
       const current = last
         ? {
             translateY: snapPx(last.translateY + (target.translateY - last.translateY) * SMOOTHING),
