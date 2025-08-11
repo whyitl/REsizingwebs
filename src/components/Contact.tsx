@@ -191,10 +191,10 @@ const Contact = () => {
 
               {/* Services Multi-Select */}
               <div>
-                <label className="block text-sm font-medium text-brand-black mb-4">
-                  What services are you interested in? *
-                </label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <label htmlFor="services" className="block text-sm font-medium text-brand-black mb-4">
+                    What services are you interested in? *
+                  </label>
+                <div id="services" className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {serviceOptions.map((service) => (
                     <label key={service} className="flex items-center p-3 border border-brand-gray-light rounded-lg hover:border-brand-black transition-colors cursor-pointer">
                       <input
@@ -224,6 +224,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="form-select-modern"
+                    autoComplete="off"
                   >
                     <option value="">Select budget range</option>
                     {budgetOptions.map((option) => (
@@ -243,6 +244,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="form-select-modern"
+                    autoComplete="off"
                   >
                     <option value="">Select timeline</option>
                     {timelineOptions.map((option) => {
@@ -284,6 +286,7 @@ const Contact = () => {
                     value={formData.referralSource}
                     onChange={handleChange}
                     className="form-select-modern"
+                    autoComplete="off"
                   >
                     <option value="">Select source</option>
                     {referralOptions.map((option) => (
