@@ -50,6 +50,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const endOffsetRef = useRef<number>(0);
   const lastTransformsRef = useRef(new Map<number, any>());
   const isUpdatingRef = useRef(false);
+  const isMobileRef = useRef<boolean>(false);
 
   const calculateProgress = useCallback((scrollTop: number, start: number, end: number) => {
     if (scrollTop < start) return 0;
@@ -115,10 +116,15 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
       let translateY = 0;
       const isPinned = localScroll >= pinStart && localScroll <= pinEnd;
-      if (isPinned) {
-        translateY = localScroll - cardTop + stackPositionPx + (itemStackDistance * i);
-      } else if (localScroll > pinEnd) {
-        translateY = pinEnd - cardTop + stackPositionPx + (itemStackDistance * i);
+      if (!isMobileRef.current) {
+        if (isPinned) {
+          translateY = localScroll - cardTop + stackPositionPx + (itemStackDistance * i);
+        } else if (localScroll > pinEnd) {
+          translateY = pinEnd - cardTop + stackPositionPx + (itemStackDistance * i);
+        }
+      } else {
+        // On mobile, rely on sticky positioning for vertical tracking to avoid jitter
+        translateY = 0;
       }
 
       const target = {
@@ -139,7 +145,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
           }
         : target;
 
-      const transform = `translate3d(0, ${current.translateY | 0}px, 0) scale(${current.scale}) rotate(${current.rotation}deg)`;
+      const transform = isMobileRef.current
+        ? `translate3d(0, 0, 0) scale(${current.scale})`
+        : `translate3d(0, ${current.translateY | 0}px, 0) scale(${current.scale}) rotate(${current.rotation}deg)`;
       const lastApplied = lastTransformsRef.current.get(i);
       if (!lastApplied ||
           lastApplied.translateY !== current.translateY ||
@@ -195,6 +203,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     const endEl = container.querySelector('.scroll-stack-end') as HTMLElement;
     endOffsetRef.current = endEl ? endEl.offsetTop : 0;
 
+    // detect mobile once on mount
+    isMobileRef.current = window.matchMedia('(max-width: 767px)').matches;
+
     cards.forEach((card, i) => {
       if (i < cards.length - 1) {
         card.style.marginBottom = `${itemDistance}px`;
@@ -208,6 +219,11 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       (card.style as any).webkitPerspective = '1000px';
       // set once to avoid reflow each frame
       (card.style as any).zIndex = String(i + 1);
+      if (isMobileRef.current) {
+        // Use sticky for vertical tracking, GPU only for scale
+        (card.style as any).position = 'sticky';
+        (card.style as any).top = `${parsePercentage(stackPosition, window.innerHeight) + (itemStackDistance * i)}px`;
+      }
     });
 
     let ticking = false;
