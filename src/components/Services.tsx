@@ -113,7 +113,7 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="section-light pt-14 md:pt-16 pb-80 md:pb-96">
+    <section id="services" className="section-light section-padding pb-8 md:pb-12 lg:pb-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12 lg:mb-14">
           <h2 className="heading-lg text-brand-black mb-4">

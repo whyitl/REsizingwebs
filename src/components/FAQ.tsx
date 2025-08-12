@@ -25,7 +25,7 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section id="faq" className="section-light py-16 animate-on-scroll">
+    <section id="faq" className="section-light section-padding animate-on-scroll">
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 className="heading-lg text-brand-black mb-3">Frequently Asked Questions</h2>

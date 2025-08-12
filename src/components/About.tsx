@@ -5,7 +5,7 @@ import ScrambledText from './ScrambledText';
 const About = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   return (
-    <section id="about" className="section-light py-24 animate-on-scroll">
+    <section id="about" className="section-light section-padding animate-on-scroll">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Main 2-Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
