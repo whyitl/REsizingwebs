@@ -4,13 +4,26 @@ import "./ScrollStack.css";
 export interface ScrollStackItemProps {
   itemClassName?: string;
   children: ReactNode;
+  dataScaleAdjust?: number; // multiplier applied on top of computed scale
+  dataRotationAdjust?: number; // degrees added to computed rotation
+  dataBlurAdjust?: number; // pixels added to computed blur
 }
 
 export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({
   children,
   itemClassName = "",
+  dataScaleAdjust,
+  dataRotationAdjust,
+  dataBlurAdjust,
 }) => (
-  <div className={`scroll-stack-card ${itemClassName}`.trim()}>{children}</div>
+  <div
+    className={`scroll-stack-card ${itemClassName}`.trim()}
+    {...(dataScaleAdjust !== undefined ? { 'data-scale-adjust': String(dataScaleAdjust) } : {})}
+    {...(dataRotationAdjust !== undefined ? { 'data-rotation-adjust': String(dataRotationAdjust) } : {})}
+    {...(dataBlurAdjust !== undefined ? { 'data-blur-adjust': String(dataBlurAdjust) } : {})}
+  >
+    {children}
+  </div>
 );
 
 interface ScrollStackProps {
@@ -100,14 +113,22 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
       const scaleProgress = calculateProgress(localScroll, triggerStart, triggerEnd);
       const targetScale = baseScale + i * itemScale;
-      const scale = 1 - scaleProgress * (1 - targetScale);
-      const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
+      let scale = 1 - scaleProgress * (1 - targetScale);
+      let rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
 
       let blur = 0;
       if (blurAmount && i < topCardIndex) {
         const depthInStack = topCardIndex - i;
         blur = Math.max(0, depthInStack * blurAmount);
       }
+
+      // Optional per-card admin adjustments via data attributes
+      const ds = parseFloat(card.getAttribute('data-scale-adjust') || '1');
+      const dr = parseFloat(card.getAttribute('data-rotation-adjust') || '0');
+      const db = parseFloat(card.getAttribute('data-blur-adjust') || '0');
+      if (!Number.isNaN(ds)) scale *= ds;
+      if (!Number.isNaN(dr)) rotation += dr;
+      if (!Number.isNaN(db)) blur += db;
 
       const translateY = 0;
 

@@ -8,6 +8,7 @@ import About from '@/components/About';
 import FAQ from '@/components/FAQ';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import AdminPanel from '@/pages/admin/AdminPanel';
 
 const Index = () => {
   useEffect(() => {
@@ -42,6 +43,7 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <AdminPanel />
         <Services />
         <Portfolio />
         <About />
