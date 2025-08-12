@@ -110,7 +110,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="section-light section-padding animate-on-scroll">
+    <section id="contact" className="section-light section-padding animate-on-scroll lg:pt-24 lg:pb-28">
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
         {/* Static heading (no animation) */}
         <div className="text-center mb-10 md:mb-12">

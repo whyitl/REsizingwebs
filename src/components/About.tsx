@@ -5,7 +5,7 @@ import ScrambledText from './ScrambledText';
 const About = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   return (
-    <section id="about" className="section-light section-padding animate-on-scroll">
+    <section id="about" className="section-light section-padding animate-on-scroll lg:pt-24 lg:pb-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Main 2-Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
@@ -107,19 +107,19 @@ const About = () => {
                   Pricing model
                 </h3>
                 <div className="space-y-4 body-md">
-                  <div className="hover:text-brand-gray transition-colors duration-200 cursor-pointer">
+                  <div className="hover:text-brand-white transition-colors duration-200 cursor-pointer">
                     Initial creation: $300–$700 one‑time — based on site complexity and features
                   </div>
-                  <div className="hover:text-brand-gray transition-colors duration-200 cursor-pointer">
+                  <div className="hover:text-brand-white transition-colors duration-200 cursor-pointer">
                     Monthly care: $40–$150 — hosting, updates, security, and small edits
                   </div>
-                  <div className="text-brand-gray">
+                  <div className="text-brand-white">
                     Pricing is tailored to what you need. We’ll scope it with you and give a clear quote.
                   </div>
                 </div>
                 <button 
                   onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="mt-8 inline-flex items-center text-brand-white border border-brand-white px-6 py-3 hover:bg-brand-white hover:text-brand-black transition-all duration-300 group"
+                  className="mt-8 inline-flex items-center text-brand-white border border-brand-white px-6 py-3 hover:bg-brand-white/10 hover:text-brand-white transition-all duration-300 group"
                 >
                   Get your price 
                   <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>

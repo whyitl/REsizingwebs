@@ -25,9 +25,9 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section id="faq" className="section-light section-padding animate-on-scroll">
+    <section id="faq" className="section-light section-padding animate-on-scroll lg:pt-24 lg:pb-24">
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-10">
+        <div className="text-center mb-8 md:mb-10 lg:mb-12">
           <h2 className="heading-lg text-brand-black mb-3">Frequently Asked Questions</h2>
           <p className="body-lg text-brand-gray">Answers to common questions about our process and services.</p>
         </div>

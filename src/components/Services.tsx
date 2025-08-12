@@ -113,9 +113,9 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="section-light section-padding pb-8 md:pb-12 lg:pb-16">
+    <section id="services" className="section-light section-padding pb-8 md:pb-12 lg:pb-20 lg:pt-28">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-8 md:mb-12 lg:mb-14">
+        <div className="text-center mb-8 md:mb-10 lg:mb-12">
           <h2 className="heading-lg text-brand-black mb-4">
             Our Services
           </h2>
@@ -162,7 +162,7 @@ const Services = () => {
         )}
 
         {/* Ensure visual breathing room after the last card on all viewports */}
-        <div className="h-16 md:h-24" aria-hidden="true" />
+        <div className="h-8 md:h-12 lg:h-12" aria-hidden="true" />
       </div>
     </section>
   );

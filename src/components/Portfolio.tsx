@@ -22,10 +22,10 @@ const Portfolio = () => {
   return (
     <section
       id="portfolio"
-      className="section-light section-padding animate-on-scroll"
+      className="section-light pt-20 md:pt-24 lg:pt-24 pb-20 md:pb-24 lg:pb-24 animate-on-scroll"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-6 md:mb-8">
+        <div className="text-center mb-6 md:mb-8 lg:mb-10">
           <h2 className="heading-lg text-brand-black mb-6">
             Our Work
           </h2>

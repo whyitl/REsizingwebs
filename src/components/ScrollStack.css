@@ -6,7 +6,7 @@
 }
 
 .scroll-stack-inner {
-  padding: 16vh 1.5rem 32rem; /* balanced spacing with page scroll */
+  padding: 16vh 1.5rem 6rem; /* reduce bottom padding to avoid huge gap before next section */
   min-height: 100vh;
   will-change: transform;
   -webkit-transform: translateZ(0);
