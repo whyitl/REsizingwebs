@@ -92,7 +92,7 @@ function extendMaterial<T extends THREE.Material = THREE.Material>(
 }
 
 const CanvasWrapper: FC<{ children: ReactNode }> = ({ children }) => (
-  <Canvas dpr={[1, 2]} frameloop="always" className="beams-container">
+  <Canvas dpr={[1, 1]} frameloop="always" className="beams-container">
     {children}
   </Canvas>
 );
@@ -354,7 +354,7 @@ const MergedPlanes = forwardRef<
   );
   useImperativeHandle(ref, () => mesh.current);
   const geometry = useMemo(
-    () => createStackedPlanesBufferGeometry(count, width, height, 0, 100),
+    () => createStackedPlanesBufferGeometry(count, width, height, 0, 60),
     [count, width, height]
   );
   useFrame((_, delta) => {
