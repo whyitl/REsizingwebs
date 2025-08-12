@@ -1,8 +1,7 @@
 
 import { ChevronDown } from 'lucide-react';
 import BeamsSafe from './BeamsSafe';
-import TextType from './TextType';
-import { useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 const Hero = () => {
   const [titleDone, setTitleDone] = useState(false);
@@ -19,6 +18,41 @@ const Hero = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const AnimatedHeadline: React.FC<{
+    text: string;
+    className?: string;
+    staggerMs?: number;
+    durationMs?: number;
+    onDone?: () => void;
+  }> = ({ text, className, staggerMs = 80, durationMs = 220, onDone }) => {
+    const words = useMemo(() => text.split(/\s+/), [text]);
+    const lastIndex = words.length - 1;
+    const handled = useRef(false);
+    return (
+      <h1 className={className} aria-label={text}>
+        {words.map((word, i) => (
+          <span
+            key={`${word}-${i}`}
+            className="word-fade inline-block"
+            style={{
+              // CSS variables to keep this GPU-friendly
+              ['--delay' as any]: `${i * staggerMs}ms`,
+              ['--dur' as any]: `${durationMs}ms`,
+            }}
+            onAnimationEnd={i === lastIndex ? () => {
+              if (!handled.current) {
+                handled.current = true;
+                onDone?.();
+              }
+            } : undefined}
+          >
+            {word}{i !== lastIndex ? ' ' : ''}
+          </span>
+        ))}
+      </h1>
+    );
   };
 
   return (
@@ -39,16 +73,12 @@ const Hero = () => {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10 cv-auto" style={{ contentVisibility: 'auto', containIntrinsicSize: '800px 600px' }}>
         <div className="animate-fade-in">
-          <TextType
-            as="h1"
+          <AnimatedHeadline
+            text="Crafting Digital Experiences That Convert"
             className="heading-xl text-brand-white mb-8"
-            text={["Crafting Digital Experiences That Convert"]}
-            typingSpeed={50}
-            pauseDuration={1500}
-            showCursor={false}
-            loop={false}
-            startOnVisible={true}
-            onSentenceComplete={() => setTitleDone(true)}
+            staggerMs={70}
+            durationMs={200}
+            onDone={() => setTitleDone(true)}
           />
 
           <div className={`transition-opacity duration-500 ${titleDone ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
