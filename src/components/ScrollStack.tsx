@@ -109,7 +109,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
       const triggerEnd = cardTop - scaleEndPositionPx;
       const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
-      const pinEnd = endElementTop - containerHeight / 2;
+      const pinEndOffset = parseFloat(card.getAttribute('data-pin-end-offset') || '0');
+      const pinEnd = endElementTop - containerHeight / 2 + (Number.isNaN(pinEndOffset) ? 0 : pinEndOffset);
 
       const scaleProgress = calculateProgress(localScroll, triggerStart, triggerEnd);
       const targetScale = baseScale + i * itemScale;
